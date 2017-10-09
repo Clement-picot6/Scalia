@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>sorting</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="style/style.css">
+
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	
+	<!-- vuejs -->
+	<script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<div id="vue-instance">
+
+		<div class="items-per-page">
+		</div>
+		<table class="table">
+			<tr class="head">
+				<th>All</th>
+				<th>SKU</th>
+				<th>LABEL</th>
+				<th>FAMILY</th>
+				<th>STATUS</th>
+				<th>COMPLETE</th>
+				<th>CREATED AT</th>
+				<th>UPDATED AT</th>
+			</tr>
+			<tr v-for="(item, index) in items" v-if="(index >= itemsPerPage*actualPage - itemsPerPage) && (index < itemsPerPage*actualPage)">
+				<td><input type="checkbox"></td>
+				<td>{{item.sku}}</td>
+				<td>{{item.label}}</td>
+				<td>{{item.family}}</td>
+				<td>{{item.status}}</td>
+				<td>{{item.complete}}%</td>
+				<td>{{item.created_at}}</td>
+				<td>{{item.updated_at}}</td>
+			</tr>
+		</table>
+<!-- 		<div class="pagination">
+			<span v-for="(index, nbPage) in nbPages" v-on:click="switchPage(index)">{{nbPage + 1}}</span>
+		</div> -->
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li class="page-item" v-for="(index, nbPage) in nbPages" v-on:click="switchPage(index)"><a class="page-link" href="#">{{nbPage + 1}}</a></li>
+			</ul>
+		</nav>
+
+		<select name="itemsperpage" v-on:change="switchItemsPerPage" v-model="itemsPerPage" id="itemsperpage">
+			<option v-for="option in optionsPerPage" v-bind:value="option">
+					{{option}}
+				</option>
+		</select>
+	</div>
+</body>
+
+<script>
+	
+	var vm = new Vue({
+		el: '#vue-instance',
+		data: {
+			items: [
+
+			],
+			actualPage: 1,
+			itemsPerPage: 20,
+			nbPages: 1,
+			optionsPerPage: [20, 25, 50, 100]
+		},
+
+		created: function(){
+			for(let i = 0; i < 110; i++){
+				let item = {
+					sku: i,
+					label: "Ricoh printer 5547",
+					family: "Laser and LED printer",
+					status: 1,
+					complete: 100,
+					created_at: "oct 20, 2015",
+					updated_at: "feb 2, 2016"
+				}
+				this.items.push(item)
+				console.log(this.items);
+			}
+
+			this.nbPages = Math.ceil(this.items.length / this.itemsPerPage - 1)
+		},
+
+		methods: {
+
+			switchPage: function(index){
+				this.actualPage = (index+1)
+			},
+
+			switchItemsPerPage: function(option){
+				this.actualPage = 1;
+				this.nbPages = Math.ceil(this.items.length / this.itemsPerPage)
+			}
+
+		}
+	});
+
+
+</script>
+
+</html>
+
+
+
+
+
+
+
+
+
