@@ -85,13 +85,13 @@
 				console.log(this.items);
 			}
 
-			this.nbPages = Math.ceil(this.items.length / this.itemsPerPage - 1)
+			this.nbPages = Math.ceil(this.items.length / this.itemsPerPage)
 		},
 
 		methods: {
 
 			switchPage: function(index){
-				this.actualPage = (index+1)
+				this.actualPage = index
 			},
 
 			switchItemsPerPage: function(option){
